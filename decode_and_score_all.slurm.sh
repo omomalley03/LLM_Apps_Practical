@@ -34,7 +34,9 @@ CHECKPOINTS=(
 )
 
 CHECKPOINT=${CHECKPOINTS[$SLURM_ARRAY_TASK_ID]}
-EXPERIMENT_NAME=gpt2_nlu
+# EXPERIMENT_NAME=gpt2_nlu
+EXPERIMENT_NAME=gpt2_exp2
+
 
 echo "=============================="
 echo "Array task:  $SLURM_ARRAY_TASK_ID"
