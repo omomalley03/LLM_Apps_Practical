@@ -1,0 +1,21 @@
+# Large data/output directories
+checkpoints/
+hyps/
+scores/
+runs/
+wandb/
+tmp/
+junk/
+
+# SLURM log files
+slurm-*.out
+slurm_logs/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Hydra output directories
+outputs/
+.hydra/

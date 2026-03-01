@@ -1,0 +1,27 @@
+#!/bin/bash
+#SBATCH -J TryMe2
+#SBATCH -A MLMI-omo26-SL2-CPU
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+#SBATCH --time=00:05:00
+#SBATCH --array=0-1
+#SBATCH -p cclake
+#! ############################################################
+. /etc/profile.d/modules.sh                # Leave this line (enables the module command)
+module purge                               # Removes all modules still loaded
+
+JOBNAMES=(JOB0 JOB1)
+JOBNAME=${JOBNAMES[$SLURM_ARRAY_TASK_ID]}
+# SLURM_ARRAY_TASK_ID will be either 0 or 1,  
+# as determined by the --array directive above.
+
+JOBID=$SLURM_JOB_ID.$SLURM_ARRAY_TASK_ID
+
+LOG=slurm_logs/log.slurm.example.$JOBID.txt
+mkdir -p slurm_logs
+
+echo "Hi.  I'm an example SLURM job $JOBNAME." > $LOG
+echo "I'm running on `hostname`." >> $LOG
+echo "I've started at `date`" >> $LOG
+sleep 3m
+echo "And now I'm finished at `date`" >> $LOG
