@@ -251,18 +251,26 @@ def main():
         output = prepare_exp2(examples, history_map)
 
     elif args.mode == 'exp3':
-        if args.refs_file:
-            # Dev/test: use the refs file (ground truth cumulative annotations)
+        # Check if this is test data (no belief_state field present)
+        is_test_data = 'belief_state' not in examples[0]
+        if is_test_data:
+            # Test data has no labels - just build history input, no belief states needed
+            print("Test data detected (no belief_state field) - building history input only...")
+            output = prepare_exp2(examples, history_map)
+        elif args.refs_file:
+            # Dev: use the refs file (ground truth cumulative annotations)
             print(f"Loading cumulative belief states from {args.refs_file}")
             cumulative_map = build_cumulative_belief_states(args.refs_file)
             print(f"Loaded cumulative belief states for {len(cumulative_map)} turns")
+            print("Preparing Experiment 3 data (history input, cumulative targets)...")
+            output = prepare_exp3(examples, history_map, cumulative_map)
         else:
             # Train: no refs file available, so accumulate from turn-level data
             print("No refs file provided - building cumulative belief states from training data...")
             cumulative_map = build_cumulative_belief_states_from_training(examples)
             print(f"Built cumulative belief states for {len(cumulative_map)} turns")
-        print("Preparing Experiment 3 data (history input, cumulative targets)...")
-        output = prepare_exp3(examples, history_map, cumulative_map)
+            print("Preparing Experiment 3 data (history input, cumulative targets)...")
+            output = prepare_exp3(examples, history_map, cumulative_map)
 
     output_path = Path(args.output_dir) / 'data.json'
     print(f"Writing {len(output)} examples to {output_path}")

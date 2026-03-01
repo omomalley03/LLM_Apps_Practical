@@ -35,7 +35,7 @@ CHECKPOINTS=(
 
 CHECKPOINT=${CHECKPOINTS[$SLURM_ARRAY_TASK_ID]}
 # EXPERIMENT_NAME=gpt2_nlu
-EXPERIMENT_NAME=gpt2_exp2
+EXPERIMENT_NAME=gpt2_exp3
 
 
 echo "=============================="
@@ -53,8 +53,8 @@ SCORE_SCRIPT=$BDIR/src/multiwoz_dst_score.py
 
 # TEST_DATA=$BDIR/data_preparation/data/multiwoz21/processed/test/version_1/data.json
 # DEV_DATA=$BDIR/data_preparation/data/multiwoz21/processed/dev/version_1/data.json
-TEST_DATA=/rds/user/$USER/hpc-work/data_preparation/data/multiwoz21/processed/test/exp2/data.json
-DEV_DATA=/rds/user/$USER/hpc-work/data_preparation/data/multiwoz21/processed/dev/exp2/data.json
+TEST_DATA=/rds/user/$USER/hpc-work/data_preparation/data/multiwoz21/processed/test/exp3/data.json
+DEV_DATA=/rds/user/$USER/hpc-work/data_preparation/data/multiwoz21/processed/dev/exp3/data.json
 
 
 TEST_REFS=$BDIR/data_preparation/data/multiwoz21/refs/test/test_v2.1.json
@@ -91,7 +91,7 @@ echo "=== TEST NLU (turn-level) ===" >> $SCORE_FILE
 python $SCORE_SCRIPT \
     dst_reference=$TEST_REFS \
     hypothesis=$TEST_HYP_DIR/belief_states.json \
-    field=nlu_belief_state \
+    field=dst_belief_state \
     model_type=decoder | tee -a $SCORE_FILE
 
 # -------------------------------------------------------
@@ -117,7 +117,7 @@ echo "=== DEV NLU (turn-level) ===" >> $SCORE_FILE
 python $SCORE_SCRIPT \
     dst_reference=$DEV_REFS \
     hypothesis=$DEV_HYP_DIR/belief_states.json \
-    field=nlu_belief_state \
+    field=dst_belief_state \
     model_type=decoder | tee -a $SCORE_FILE
 
 # -------------------------------------------------------
