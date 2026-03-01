@@ -23,8 +23,11 @@ module load anaconda/3.2019-10
 eval "$(conda shell.bash hook)"
 source /rds/project/rds-xyBFuSj0hm0/MLMI8.L2024/envs/README.MLMI8.SEQ2SEQDST.activate
 
-RUN_NAME=gpt2_nlu_train
-EXPERIMENT_NAME=gpt2_nlu
+# RUN_NAME=gpt2_nlu_train
+# EXPERIMENT_NAME=gpt2_nlu
+
+RUN_NAME=gpt2_exp2_train
+EXPERIMENT_NAME=gpt2_exp2
 
 mkdir -p checkpoints/"$EXPERIMENT_NAME"/logs
 
@@ -38,8 +41,11 @@ echo "Time: `date`" >> $LOG
 echo "Running on master node: `hostname`" >> $LOG
 
 train_script=$BDIR/src/train-dst.py
-train_data=$BDIR/data_preparation/data/multiwoz21/processed/train/version_1/data.json
-dev_data=$BDIR/data_preparation/data/multiwoz21/processed/dev/version_1/data.json
+# train_data=$BDIR/data_preparation/data/multiwoz21/processed/train/version_1/data.json
+# dev_data=$BDIR/data_preparation/data/multiwoz21/processed/dev/version_1/data.json
+
+train_data=/rds/user/$USER/hpc-work/data_preparation/data/multiwoz21/processed/train/exp2/data.json
+dev_data=/rds/user/$USER/hpc-work/data_preparation/data/multiwoz21/processed/dev/exp2/data.json
 
 python $train_script train=gpt2 train.experiment_name=$EXPERIMENT_NAME train.train_path=$train_data \
         dev.dev_path=$dev_data \
