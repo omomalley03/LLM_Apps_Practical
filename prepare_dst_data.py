@@ -192,7 +192,7 @@ def prepare_exp2(examples, history_map):
             'example_id': example_id,
             'dst_input': history_map[example_id],
             'nlu_correction': ex.get('nlu_correction', ''),
-            'belief_state': ex['belief_state'],  # turn-level, unchanged
+            'belief_state': ex.get('belief_state', ''),  # not present in test data
         })
     if skipped:
         print(f"Warning: skipped {skipped} examples not found in history map")

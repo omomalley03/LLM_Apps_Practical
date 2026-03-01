@@ -51,8 +51,11 @@ echo "=============================="
 TRAIN_SCRIPT=$BDIR/src/decode-dst.py
 SCORE_SCRIPT=$BDIR/src/multiwoz_dst_score.py
 
-TEST_DATA=$BDIR/data_preparation/data/multiwoz21/processed/test/version_1/data.json
-DEV_DATA=$BDIR/data_preparation/data/multiwoz21/processed/dev/version_1/data.json
+# TEST_DATA=$BDIR/data_preparation/data/multiwoz21/processed/test/version_1/data.json
+# DEV_DATA=$BDIR/data_preparation/data/multiwoz21/processed/dev/version_1/data.json
+TEST_DATA=/rds/user/$USER/hpc-work/data_preparation/data/multiwoz21/processed/test/exp2/data.json
+DEV_DATA=/rds/user/$USER/hpc-work/data_preparation/data/multiwoz21/processed/dev/exp2/data.json
+
 
 TEST_REFS=$BDIR/data_preparation/data/multiwoz21/refs/test/test_v2.1.json
 DEV_REFS=$BDIR/data_preparation/data/multiwoz21/refs/dev/dev_v2.1.json
@@ -125,18 +128,30 @@ CC_TEST_OUT=hyps/test/${EXPERIMENT_NAME}_cc_dst/$CHECKPOINT
 CC_DEV_OUT=hyps/dev/${EXPERIMENT_NAME}_cc_dst/$CHECKPOINT
 mkdir -p $CC_TEST_OUT $CC_DEV_OUT
 
+# python $BDIR/src/cc-dst.py \
+#     --nlu_bs $TEST_HYP_DIR/belief_states.json \
+#     --nlu_turns $TEST_DATA \
+#     --dst_out $CC_TEST_OUT/belief_states.json \
+#     --field_name predicted_belief_state
+
+# python $BDIR/src/cc-dst.py \
+#     --nlu_bs $DEV_HYP_DIR/belief_states.json \
+#     --nlu_turns $DEV_DATA \
+#     --dst_out $CC_DEV_OUT/belief_states.json \
+#     --field_name predicted_belief_state
+
 python $BDIR/src/cc-dst.py \
     --nlu_bs $TEST_HYP_DIR/belief_states.json \
-    --nlu_turns $TEST_DATA \
+    --nlu_turns $BDIR/data_preparation/data/multiwoz21/processed/test/version_1/data.json \  # ← original
     --dst_out $CC_TEST_OUT/belief_states.json \
     --field_name predicted_belief_state
 
 python $BDIR/src/cc-dst.py \
     --nlu_bs $DEV_HYP_DIR/belief_states.json \
-    --nlu_turns $DEV_DATA \
+    --nlu_turns $BDIR/data_preparation/data/multiwoz21/processed/dev/version_1/data.json \   # ← original
     --dst_out $CC_DEV_OUT/belief_states.json \
     --field_name predicted_belief_state
-
+    
 # -------------------------------------------------------
 # Score: CC-DST (dialogue-level)
 # -------------------------------------------------------
