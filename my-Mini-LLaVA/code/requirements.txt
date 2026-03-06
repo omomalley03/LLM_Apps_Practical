@@ -1,0 +1,16 @@
+torch
+torchvision
+transformers
+datasets
+accelerate
+pillow
+peft
+tqdm
+numpy
+matplotlib
+wandb
+jupyter
+huggingface_hub
+requests
+pandas
+qwen_vl_utils

@@ -1,0 +1,59 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+
+
+# VSCode
+.vscode
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+# Output folders
+output*/
+output/
+evaluation_results/
+final_model/
+checkpoints/
+
+# Data files (if large or downloaded locally)
+data/
+*.zip
+# Be cautious with general image types if config/small example images are in repo
+# GCC_train_*.jpg 
+
+# Log files
+logs/
+wandb/
+*.log
+events.out.tfevents.*
+
+# Model files
+*.pt
+*.pth
+*.bin
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+env
+*.out
