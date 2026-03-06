@@ -48,7 +48,7 @@ Cumulative belief states for the training split were constructed by accumulating
 
 ### Key design decisions
 - Full dialogue history is provided as input at every turn, rather than just the current turn pair. This allows the model to resolve coreferences and context-dependent expressions (e.g. "same day", "same price range") that cannot be resolved from a single turn in isolation.
-- The model is trained to predict the **cumulative** belief state directly, rather than predicting turn-level annotations that are subsequently concatenated. This avoids the exposure bias problem inherent in pipeline approaches such as Cheap-and-Cheerful DST (CC-DST), where errors in early turns propagate through the history at inference time.
+- The model is trained to predict the **cumulative** belief state directly, rather than predicting turn-level annotations that are subsequently concatenated. 
 - Slot-value pairs in the target belief state are sorted **alphabetically** to ensure a consistent, deterministic output ordering that matches the MultiWOZ reference annotation format.
 
 ---
